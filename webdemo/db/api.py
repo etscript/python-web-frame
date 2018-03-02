@@ -18,7 +18,7 @@ def get_engine():
     if _ENGINE is not None:
         return _ENGINE
     _ENGINE = create_engine(
-        "mysql+mysqldb://root:root123@10.0.38.237:3306/test?charset=utf8",
+        "mysql+mysqldb://root:mysql@localhost:3306/flask?charset=utf8",
         echo=True)
     db_models.int_dbs(_ENGINE)
     return _ENGINE

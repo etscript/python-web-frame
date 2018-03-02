@@ -35,6 +35,7 @@ class UsersController(rest.RestController):
     def post(self, user):
         db_conn = request.db_conn
         db_conn.add_user(user)
+        #print user.name
 
     @expose.expose(Users)
     def get(self):
