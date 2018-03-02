@@ -144,9 +144,11 @@ class Connection(object):
             logger.error("query by user_id not found ...")
         return add
 
-    def list_addresses(self):
+    def list_addresses(self, openid):
         adds = dict()
-        query = get_session().query(db_models.db_Address)
+        query = get_session().query(
+            db_models.db_Address).filter_by(
+            openid=openid)
         try:
             adds = query.all()
         except exc.NoResultFound:

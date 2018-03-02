@@ -47,6 +47,7 @@ class AddressesController(rest.RestController):
 
     @expose.expose(Addresses)
     def get(self):
+        openid = pecan.request.headers.get('openid')
         logger.info("Get all addresses Method is called ...")
         """
 
@@ -63,13 +64,14 @@ class AddressesController(rest.RestController):
         addresses_list = [Address(**address_info) for address_info in address_info_list]
         """
         db_conn = request.db_conn
-        adds = db_conn.list_addresses()
+        adds = db_conn.list_addresses(openid)
         if len(adds) == 0:
             return R_Address()
         addresses_list = []
         for add in adds:
             a = R_Address()
             a.id = add.id
+            a.openid = add.openid
             a.province = add.province
             a.city = add.city
             a.area = add.area
@@ -81,8 +83,8 @@ class AddressesController(rest.RestController):
         return Addresses(addresses=addresses_list)
 
     @pecan.expose()
-    def _lookup(self, user_id, *remainder):
-        return AddressController(user_id), remainder
+    def _lookup(self, id, *remainder):
+        return AddressController(id), remainder
 
 
 class AddressController(rest.RestController):
@@ -92,7 +94,7 @@ class AddressController(rest.RestController):
 
     """
     test eg:
-         http://127.0.0.1:8080/v1/users/abc
+         http://127.0.0.1:8080/v1/addresses/id
     """
     @expose.expose(R_Address)
     def get(self):
