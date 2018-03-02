@@ -63,3 +63,20 @@ class db_Telephone(Base):
 
     def __repr__(self):
         return "<Tele(telephone='%s')>" % self.telnumber
+
+
+class db_Address(Base):
+    __tablename__ = 'address'
+
+    id = Column(Integer, primary_key=True)
+    openid = Column(String(128))
+    province = Column(String(1024))
+    city = Column(String(1024))
+    area = Column(String(1024))
+    address = Column(String(1024))
+    tel = Column(String(64))
+    name = Column(String(128))
+
+    def __repr__(self):
+        return "<User(openid='%s', province='%s', city='%s',area='%s',address='%s',tel='%s',name='%s')>" % (
+            self.openid, self.province, self.city, self.area, self.address, self.tel, self.name)
