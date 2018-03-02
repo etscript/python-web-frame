@@ -34,12 +34,13 @@ def verify_wxapp(encrypted_data, iv, code, db_conn):
 
 def create_token(user, db_conn):
     # verify basic token
-    approach = user.get('auth_approach')
-    username = user['username']
-    password = user['password']
+    print user
+    approach = user.auth_approach
+    username = user.username
+    password = user.password
     
     if approach == 'wxapp':
-        account, session_key = verify_wxapp(username, password, user.get('code'), db_conn)
+        account, session_key = verify_wxapp(username, password, user.code, db_conn)
     if not account:
         return False, {}
     payload = {

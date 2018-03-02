@@ -22,7 +22,7 @@ class db_User(Base):
         Index('ix_user_openid', 'openid'),
     )
     id = Column(Integer, primary_key=True)
-    openid = Column(String(255), index = True)
+    openid = Column(String(255))
     nickname = Column(String(128))
     gender = Column(String(64))
     country = Column(String(128))
@@ -59,7 +59,7 @@ class db_Telephone(Base):
     telnumber = Column(String(255), nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
 
-    user = relationship("db_User", back_populates="telephone")
+    # user = relationship("db_User", back_populates="telephone")
 
     def __repr__(self):
         return "<Tele(telephone='%s')>" % self.telnumber

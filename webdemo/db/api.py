@@ -44,11 +44,11 @@ class Connection(object):
     def __init__(self):
         pass
 
-    def get_user(self, user_id):
+    def get_user(self, openid):
         user = None
         query = get_session().query(
             db_models.db_User).filter_by(
-            user_id=user_id)
+            openid=openid)
         try:
             user = query.one()
         except exc.NoResultFound:
@@ -96,15 +96,15 @@ class Connection(object):
             logger.error("delete user occur error ...")
 
     def add_user(self, user):
-        logger.info("user.nickname: %s" % (user.nickname))
+        # logger.info("user.nickname: %s" % (user.nickname))
 
         db_user = db_models.db_User(
-            openid=user.openid,
-            nickname=user.nickname,
-            gender=user.gender,
-            country=user.country,
-            province=user.province,
-            city=city,
+            openid=user['openId'],
+            nickname=user['nickName'],
+            gender=user['gender'],
+            country=user['country'],
+            province=user['province'],
+            city=user['city'],
         )
         try:
             session = get_session()

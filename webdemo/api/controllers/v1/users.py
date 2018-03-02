@@ -23,6 +23,12 @@ class Person(wtypes.Base):
     email = wtypes.text
     phone = wtypes.ArrayType(wtypes.text)
 
+class TokenAuth(wtypes.Base):
+    auth_approach = wtypes.text
+    code = wtypes.text
+    grant_type = wtypes.text
+    password = wtypes.text
+    username = wtypes.text
 
 class Users(wtypes.Base):
     users = [Person]
@@ -37,13 +43,20 @@ class UsersController(rest.RestController):
        curl -X POST http://localhost:8080/v1/users -H "Content-Type: application/json" -d '{"phone": ["1000860","100876"], "age": 24, "user_id": "133", "name": "kile", "email": "111@163.com"}' -v
 
     '''
-    @expose.expose(Token, body=Person, status_code=201)
+    @expose.expose(Token, body=TokenAuth, status_code=201)
     def post(self, user):
+        print user
         db_conn = request.db_conn
         is_validate, token = create_token(user, db_conn)
         if not is_validate:
             pecan.abort(401)
-        return token
+
+        r_token = Token()
+        r_token.access_token = token['access_token']
+        r_token.nickname = token['nickname']
+        r_token.openid = token['openid']
+        r_token.avatarUrl = token['avatarUrl']
+        return r_token
         # db_conn.add_user(user)
         #print user.name
 
