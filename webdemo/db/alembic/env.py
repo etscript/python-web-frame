@@ -16,10 +16,9 @@ fileConfig(config.config_file_name)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 #target_metadata = None
-import os
 import sys                                             
 from os.path import abspath, dirname                   
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
+sys.path.append(dirname(dirname(abspath(__file__))))   
 from models import Base                        
 target_metadata = Base.metadata   
 

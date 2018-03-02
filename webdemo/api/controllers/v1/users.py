@@ -7,7 +7,13 @@ import logging
 from webdemo.api import expose
 from pecan import request
 logger = logging.getLogger(__name__)
+from wxapp import create_token
 
+class Token(wtypes.Base):
+    access_token = wtypes.text
+    nickname = wtypes.text
+    openid = wtypes.text
+    avatarUrl = wtypes.text
 
 class Person(wtypes.Base):
     user_id = wtypes.text
@@ -31,10 +37,14 @@ class UsersController(rest.RestController):
        curl -X POST http://localhost:8080/v1/users -H "Content-Type: application/json" -d '{"phone": ["1000860","100876"], "age": 24, "user_id": "133", "name": "kile", "email": "111@163.com"}' -v
 
     '''
-    @expose.expose(None, body=Person, status_code=201)
+    @expose.expose(Token, body=Person, status_code=201)
     def post(self, user):
         db_conn = request.db_conn
-        db_conn.add_user(user)
+        is_validate, token = create_token(user, db_conn)
+        if not is_validate:
+            pecan.abort(401)
+        return token
+        # db_conn.add_user(user)
         #print user.name
 
     @expose.expose(Users)

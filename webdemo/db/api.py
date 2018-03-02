@@ -18,7 +18,7 @@ def get_engine():
     if _ENGINE is not None:
         return _ENGINE
     _ENGINE = create_engine(
-        "mysql+mysqldb://root:mysql@localhost:3306/flask?charset=utf8",
+        "mysql+mysqldb://root:mysql@localhost:3306/wxapp?charset=utf8",
         echo=True)
     db_models.int_dbs(_ENGINE)
     return _ENGINE
@@ -96,18 +96,15 @@ class Connection(object):
             logger.error("delete user occur error ...")
 
     def add_user(self, user):
-        logger.info("user.phone: %s" % (user.phone))
-        phones=[]
-        for i in user.phone:
-            db_phone=db_models.db_Telephone(telnumber=i)
-            phones.append(db_phone)
+        logger.info("user.nickname: %s" % (user.nickname))
+
         db_user = db_models.db_User(
-            user_id=user.user_id,
-            email=user.email,
+            openid=user.openid,
+            nickname=user.nickname,
             gender=user.gender,
-            name=user.name,
-            age=user.age,
-            telephone=phones,
+            country=user.country,
+            province=user.province,
+            city=city,
         )
         try:
             session = get_session()

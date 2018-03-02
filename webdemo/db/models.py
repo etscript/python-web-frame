@@ -19,32 +19,37 @@ class db_User(Base):
 
     __tablename__ = 'user'
     __table_args__ = (
-        Index('ix_user_user_id', 'user_id'),
+        Index('ix_user_openid', 'openid'),
     )
     id = Column(Integer, primary_key=True)
-    user_id = Column(String(255), nullable=True, unique=True)
-    name = Column(String(64), nullable=False, unique=True)
-    gender = Column(String(64), nullable=False)
-    age = Column(Integer, nullable=False)
-    email = Column(String(255))
+    openid = Column(String(255), index = True)
+    nickname = Column(String(128))
+    gender = Column(String(64))
+    country = Column(String(128))
+    #province = db.Column(db.String(128), index = True, unique = True)
+    province = Column(String(128))
+    city = Column(String(128))
+    #created_time = db.Column(db.DateTime)
+    #updated_time = db.Column(db.DateTime)
 
-    telephone = relationship(
-        "db_Telephone",
-        order_by="db_Telephone.id",
-        back_populates="user" ,
-        cascade="save-update, merge, delete")
+    # telephone = relationship(
+    #     "db_Telephone",
+    #     order_by="db_Telephone.id",
+    #     back_populates="user" ,
+    #     cascade="save-update, merge, delete")
 
     def __repr__(self):
-        return "<User(user_id='%s', name='%s', gender='%s',age='%s',email='%s')>" % (
-            self.user_id, self.name, self.gender, self.age, self.email)
+        return "<User(openid='%s', nickname='%s', gender='%s',country='%s',province='%s',city='%s')>" % (
+            self.openid, self.nickname, self.gender, self.country, self.province, self.city)
 
-    def __init__(self, user_id, name, gender, age, email, telephone):
-        self.user_id = user_id
-        self.name = name
+    # def __init__(self, openid, nickname, gender, country, province, city, telephone):
+    def __init__(self, openid, nickname, gender, country, province, city):
+        self.openid = openid
+        self.nickname = nickname
         self.gender = gender
-        self.age = age
-        self.email = email
-        self.telephone = telephone
+        self.country = country
+        self.province = province
+        self.city = city
 
 
 class db_Telephone(Base):
