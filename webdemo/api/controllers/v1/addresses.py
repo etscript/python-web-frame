@@ -65,8 +65,8 @@ class AddressesController(rest.RestController):
         """
         db_conn = request.db_conn
         adds = db_conn.list_addresses(openid)
-        if len(adds) == 0:
-            return R_Address()
+        # if len(adds) == 0:
+        #     return Addresses()
         addresses_list = []
         for add in adds:
             a = R_Address()
