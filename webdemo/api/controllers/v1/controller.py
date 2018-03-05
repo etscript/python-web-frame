@@ -22,3 +22,5 @@ class v1Controller(rest.RestController):
     def get(self):
         logger.info("v1Controller Method Get is called ...")
         return "python-web-frame: pecan & wsme by v1Controller"
+    
+    

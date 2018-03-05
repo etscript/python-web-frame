@@ -6,6 +6,7 @@ from wsme import types as wtypes
 import logging
 from webdemo.api import expose
 from pecan import request
+from pecan import expose as pecan_expose
 logger = logging.getLogger(__name__)
 
 class Address(wtypes.Base):
@@ -30,8 +31,8 @@ class R_Address(wtypes.Base):
 class Addresses(wtypes.Base):
     addresses = [R_Address]
 
-
-class CsController(rest.RestController):
+class CsController(object):
+# class CsController(rest.RestController):
 
     '''
        None 表示这个方法没有返回值
@@ -45,9 +46,8 @@ class CsController(rest.RestController):
     #     db_conn = request.db_conn
     #     db_conn.add_address(add)
 
-    @expose.expose(wtypes.text)
-    def get(self):
-        
-        return ''
+    @pecan_expose()
+    def kwargs(self, **kwargs):
+        return 'success'
 
     

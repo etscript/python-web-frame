@@ -19,3 +19,15 @@ class RootController(rest.RestController):
     def get(self):
         logger.info("Method Get is called ...")
         return "python-web-frame: pecan & wsme "
+
+    # @expose.expose()
+    # def _route(self, args):
+    #     """Overrides the default routing behavior.
+
+    #     It redirects the request to the default version of the magnum API
+    #     if the version number is not specified in the url.
+    #     """
+
+    #     if args[0] and args[0] not in self._versions:
+    #         args = [self._default_version] + args
+    #     return super(RootController, self)._route(args)
