@@ -48,7 +48,6 @@ class CsController(object):
 
     @pecan_expose()
     def kwargs(self, **kwargs):
-        print str(kwargs)
-        return 'success'
+        return kwargs['echostr']
 
     
